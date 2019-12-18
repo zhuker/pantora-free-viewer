@@ -8,7 +8,15 @@
 
 ## Install
 
+```
+    sudo snap install wine-platform-runtime
+    sudo snap install wine-platform-3-stable
+
     sudo snap install --dangerous ./pantora-free-viewer_1.0_amd64.snap
+
+    sudo snap connect pantora-free-viewer:wine-runtime wine-platform-runtime
+    sudo snap connect pantora-free-viewer:wine-3-stable wine-platform-3-stable
+```
 
 
 ![pantora-free-viewer](screenshot.jpg?raw=true "pantora-free-viewer")
