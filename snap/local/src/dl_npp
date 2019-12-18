@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+#
+# Author:
+#   mmtrt [Taqi Raza]
+#
+# Description:
+#   download and prepare notepad-plus-plus for snap
+#
+# Date: Feb 11 2018
+#
+set -xue
+
+
+mknpp () {
+    appdir="PantoraFreeViewer"
+    mkdir ./{winedata,wine-runtime,wine-platform,bin} && mkdir -pv usr/share/{pixmaps,applications}
+    find "PantoraFreeViewer" "usr" -type d -execdir chmod 755 {} + && find "winedata" -type d -execdir chmod 755 "{}" +
+}
+
+mkdsk () {
+cat > pantora-free-viewer.desktop <<EOF1
+[Desktop Entry]
+Name=PANTORA AxF Viewer
+GenericName=AxF Viewer
+Comment=The Pantora AxF Viewer is 3D viewer for AxF Materials.
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Icon=${SNAP}/usr/share/pixmaps/pantora-free-viewer.png
+Exec=pantora-free-viewer %F
+StartupWMClass=PantoraFreeViewer.exe
+Categories=Utility;AXFViewer
+MimeType=application/octet-stream
+EOF1
+}
+
+mknpp
+mkdsk
+mv pantora-free-viewer bin && mv pantora-free-viewer.desktop usr/share/applications && mv pantora-free-viewer.png usr/share/pixmaps && cp -Rv -p {bin,usr,PantoraFreeViewer,wine-runtime,wine-platform,winedata} $SNAPCRAFT_PART_INSTALL
